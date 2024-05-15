@@ -6,7 +6,7 @@ import { LuChevronLast } from "react-icons/lu";
 import { LuChevronFirst } from "react-icons/lu";
 const PaginateTypeTwo = ({
   totalItems,
-  itemsPerPage,
+  itemsPerPage = 10,
   itemsPerPageOptions = [5, 10, 15],
   paginate,
   changeItemsPerPage,
@@ -59,12 +59,12 @@ const PaginateTypeTwo = ({
         {/* pagination left side */}
         <div className="flex items-center font-inter gap-10 text-gray-700 text-sm">
           <div className="flex gap-2 items-center tracking-wide">
-            <p>Show</p>
+            <p className="text-sm text-gray-700">Show</p>
             <select
               value={itemsPerPage}
               name="showData"
               onChange={handleChangePerPage}
-              className="border-gray-700 border focus:outline-none"
+              className="border-gray-500 hover:border-gray-700 border focus:outline-none"
             >
               {itemsPerPageOptions?.map((option, idx) => (
                 <option key={idx} value={option}>

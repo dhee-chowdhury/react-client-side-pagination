@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 
-export function usePagination(initialPage = 1, initialItemsPerPage = 10) {
+export function usePaginationTypeTwo(
+  initialPage = 1,
+  initialItemsPerPage = 10
+) {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [itemsPerPage, SetItemsPerPage] = useState(initialItemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
