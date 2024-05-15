@@ -15,17 +15,21 @@ const PaginationTypeTwo = () => {
           alert("something went wrong");
           console.log(error);
         });
-      return () => clearTimeout(timeout);
     }, 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
-  const { indexOfFirstItem, indexOfLastItem, paginate } = usePaginationTypeTwo(
-    1,
-    10
-  );
+  const {
+    currentPage,
+    itemsPerPage,
+    paginate,
+    changeItemsPerPage,
+    indexOfLastItem,
+    indexOfFirstItem,
+  } = usePaginationTypeTwo(1, 10);
 
   // slicing a portion of data
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem) || [];
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem) || [];
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -33,13 +37,13 @@ const PaginationTypeTwo = () => {
         <div className="h-[calc(100vh-180px)] overflow-y-auto grid grid-cols-2 gap-5 grid-flow-row w-full">
           {currentItems?.map((post) => (
             <div
-              className="px-3 py-2 border border-gray-400 space-y-3 text-wrap"
+              className="px-3 py-2 border border-gray-400 space-y-3 text-wrap col-span-1"
               key={post.id}
             >
               <h2 className="text-base font-medium">
-                {post.title || <Skeleton containerClassName="flex-1" />}
+                {post.title || <Skeleton />}
               </h2>
-              <p className="text-sm font-normal text-gray-700">
+              <p className="text-sm font-normal text-gray-700 w-full">
                 {post.body || <Skeleton count={2} />}
               </p>
               <p className="text-sm font-normal text-gray-700">
@@ -48,7 +52,13 @@ const PaginationTypeTwo = () => {
             </div>
           ))}
         </div>
-        <PaginateTypeTwo totalItems={data?.length || 0} paginate={paginate} />
+        <PaginateTypeTwo
+          totalItems={data?.length || 0}
+          paginate={paginate}
+          changeItemsPerPage={changeItemsPerPage}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+        />
       </div>
     </div>
   );
