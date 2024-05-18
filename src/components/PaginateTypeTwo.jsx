@@ -11,11 +11,13 @@ const PaginateTypeTwo = ({
   paginate,
   changeItemsPerPage,
   currentPage = 1,
+  hideChangeOptions = false,
 }) => {
   // const [active, setActive] = useState(1);
   const [pageGroup, setPageGroup] = useState(1);
   const pageNumbers = [];
   // const [selectedValue, setSelectedValue] = useState(defaultValue);
+  console.log(hideChangeOptions);
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
@@ -58,29 +60,31 @@ const PaginateTypeTwo = ({
       <div className="w-full flex items-center justify-between">
         {/* pagination left side */}
         <div className="flex items-center font-inter gap-10 text-gray-700 text-sm">
-          <div className="flex gap-2 items-center tracking-wide">
-            <p className="text-sm text-gray-700">Show</p>
-            <select
-              value={itemsPerPage}
-              name="showData"
-              onChange={handleChangePerPage}
-              className="border-gray-500 hover:border-gray-700 border focus:outline-none"
-            >
-              {itemsPerPageOptions?.map((option, idx) => (
-                <option key={idx} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <p className="tracking-wide">entries per page</p>
-          </div>
+          {hideChangeOptions === false && (
+            <div className="flex gap-2 items-center tracking-wide">
+              <p className="text-sm text-gray-700">Show</p>
+              <select
+                value={itemsPerPage}
+                name="showData"
+                onChange={handleChangePerPage}
+                className="border-gray-500 hover:border-gray-700 border focus:outline-none"
+              >
+                {itemsPerPageOptions?.map((option, idx) => (
+                  <option key={idx} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <p className="tracking-wide">entries per page</p>
+            </div>
+          )}
           <p>
             Showing {startItem}-{endItem} of {totalItems || 0} entries
           </p>
         </div>
 
         {/* right side pagination  */}
-        {totalPageNumber > 1 && totalPageNumber <= 6 ? (
+        {totalPageNumber >= 1 && totalPageNumber <= 6 ? (
           <ul className="flex items-center justify-between gap-2 text-sm text-gray-800 lg:max-w-md">
             <li
               title="first"
@@ -149,7 +153,10 @@ const PaginateTypeTwo = ({
               1
             </li>
             {pageGroup > 1 && (
-              <li className="flex items-center justify-center w-6 h-6 p-1 font-medium">
+              <li
+                onClick={() => handlePagination(currentPage - 3)}
+                className="flex items-center justify-center w-6 h-6 p-1 font-medium hover:bg-gray-300 cursor-pointer rounded-full"
+              >
                 ...
               </li>
             )}
@@ -180,7 +187,10 @@ const PaginateTypeTwo = ({
               ))}
             {pageGroup < totalPageNumber - 3 && (
               <>
-                <li className="flex items-center justify-center w-6 h-6 p-1 font-medium">
+                <li
+                  onClick={() => handlePagination(currentPage + 3)}
+                  className="flex items-center justify-center w-6 h-6 p-1 font-medium"
+                >
                   ...
                 </li>
                 <li

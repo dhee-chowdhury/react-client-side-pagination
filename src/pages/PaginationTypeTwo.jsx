@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import PaginateTypeTwo from "../components/PaginateTypeTwo";
 import { usePaginationTypeTwo } from "../hooks/usePaginationTypeTwo";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const PaginationTypeTwo = () => {
   const [data, setData] = useState([]);
@@ -26,28 +24,30 @@ const PaginationTypeTwo = () => {
     changeItemsPerPage,
     indexOfLastItem,
     indexOfFirstItem,
-  } = usePaginationTypeTwo(1, 10);
+  } = usePaginationTypeTwo(1, 20);
 
   // slicing a portion of data
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem) || [];
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <div className="py-10 shadow-lg w-full max-w-7xl mx-auto px-10">
-        <div className="h-[calc(100vh-180px)] overflow-y-auto grid grid-cols-2 gap-5 grid-flow-row w-full">
+    <div className="w-full min-h-screen flex items-center justify-center">
+      <div className="py-6 shadow-lg w-full max-w-7xl mx-auto px-10">
+        <div className="overflow-y-auto grid min-h-[calc(100vh-120px)] grid-cols-2 grid-rows-5 gap-5 grid-flow-row w-full">
           {currentItems?.map((post) => (
             <div
-              className="px-3 py-2 border border-gray-400 space-y-3 text-wrap col-span-1"
+              className="px-3 py-2 border border-gray-400 space-y-3 col-span-1 text-ellipsis"
               key={post.id}
             >
-              <h2 className="text-base font-medium">
-                {post.title || <Skeleton />}
+              <h2 className="text-base font-medium w-full text-nowrap overflow-hidden text-ellipsis">
+                {post.title}
               </h2>
-              <p className="text-sm font-normal text-gray-700 w-full">
-                {post.body || <Skeleton count={2} />}
+              <p className="text-sm font-normal text-gray-700 w-full overflow-hidden text-ellipsis">
+                {post.body.length > 100
+                  ? `${post.body.substring(0, 150)}...`
+                  : post.body}
               </p>
               <p className="text-sm font-normal text-gray-700">
-                User: {post.userId || <Skeleton />}
+                User: {post.userId}
               </p>
             </div>
           ))}
@@ -58,6 +58,7 @@ const PaginationTypeTwo = () => {
           changeItemsPerPage={changeItemsPerPage}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
+          hideChangeOptions={true}
         />
       </div>
     </div>
