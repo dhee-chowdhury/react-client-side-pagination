@@ -24,7 +24,7 @@ const PaginationTypeTwo = () => {
     changeItemsPerPage,
     indexOfLastItem,
     indexOfFirstItem,
-  } = usePaginationTypeTwo(1, 20);
+  } = usePaginationTypeTwo(1, 1);
 
   // slicing a portion of data
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem) || [];
@@ -32,7 +32,7 @@ const PaginationTypeTwo = () => {
   return (
     <div className="w-full min-h-screen flex items-center justify-center">
       <div className="py-6 shadow-lg w-full max-w-7xl mx-auto px-10">
-        <div className="overflow-y-auto grid min-h-[calc(100vh-120px)] grid-cols-2 grid-rows-5 gap-5 grid-flow-row w-full">
+        <div className="overflow-y-auto grid min-h-[calc(100vh-120px)] grid-cols-2 grid-rows-5 gap-5 grid-flow-row w-full mb-3">
           {currentItems?.map((post) => (
             <div
               className="px-3 py-2 border border-gray-400 space-y-3 col-span-1 text-ellipsis"
@@ -58,7 +58,8 @@ const PaginationTypeTwo = () => {
           changeItemsPerPage={changeItemsPerPage}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
-          hideChangeOptions={true}
+          // hideChangeOptions={true}
+          itemsPerPageOptions={[10, 25, 40]}
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ export function usePaginationTypeTwo(
   initialItemsPerPage = 10
 ) {
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const [itemsPerPage, SetItemsPerPage] = useState(initialItemsPerPage);
+  const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -36,7 +36,7 @@ export function usePaginationTypeTwo(
   };
 
   const changeItemsPerPage = (number) => {
-    SetItemsPerPage(number);
+    setItemsPerPage(number);
     setCurrentPage(1);
   };
 
