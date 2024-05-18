@@ -5,7 +5,7 @@ import { LuChevronLeft } from "react-icons/lu";
 import { LuChevronLast } from "react-icons/lu";
 import { LuChevronFirst } from "react-icons/lu";
 const PaginateTypeTwo = ({
-  totalItems,
+  totalItems = 0,
   itemsPerPage = 10,
   itemsPerPageOptions = [5, 10, 15],
   paginate,
@@ -38,7 +38,7 @@ const PaginateTypeTwo = ({
     if (number >= 3 && number <= totalPageNumber - 3) {
       setPageGroup(number - 1);
     }
-    if (number === 1) {
+    if (number < 5) {
       setPageGroup(1);
     }
     if (number > totalPageNumber - 3 && number <= totalPageNumber) {
@@ -124,7 +124,7 @@ const PaginateTypeTwo = ({
             </li>
           </ul>
         ) : (
-          <ul className="flex items-center justify-between gap-2 text-sm text-gray-800 lg:max-w-md">
+          <ul className="flex items-center justify-between gap-2 text-sm text-gray-800 lg:max-w-md select-none">
             <li
               title="first"
               onClick={() => handlePagination(1)}
@@ -139,37 +139,48 @@ const PaginateTypeTwo = ({
             >
               <LuChevronLeft className="w-5 h-5 text-gray-700" />
             </li>
+
+            <li
+              onClick={() => handlePagination(1)}
+              className={`${
+                1 === currentPage ? "bg-gray-300" : ""
+              } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
+            >
+              1
+            </li>
             {pageGroup > 1 && (
-              <>
-                <li
-                  onClick={() => handlePagination(1)}
-                  className={`${
-                    1 === currentPage ? "bg-gray-300" : ""
-                  } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
-                >
-                  1
-                </li>
-                {pageGroup > 2 && (
-                  <li className="flex items-center justify-center w-8 h-8 font-medium">
-                    ...
-                  </li>
-                )}
-              </>
-            )}
-            {pageNumbers.slice(pageGroup - 1, pageGroup + 3).map((number) => (
-              <li
-                onClick={() => handlePagination(number)}
-                className={`${
-                  number === currentPage ? "bg-gray-300" : ""
-                } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
-                key={number}
-              >
-                {number}
+              <li className="flex items-center justify-center w-6 h-6 p-1 font-medium">
+                ...
               </li>
-            ))}
+            )}
+            {pageGroup === 1 &&
+              pageNumbers.slice(pageGroup, pageGroup + 4).map((number) => (
+                <li
+                  onClick={() => handlePagination(number)}
+                  className={`${
+                    number === currentPage ? "bg-gray-300" : ""
+                  } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
+                  key={number}
+                >
+                  {number}
+                </li>
+              ))}
+            {pageGroup > 1 &&
+              pageGroup < totalPageNumber - 3 &&
+              pageNumbers.slice(pageGroup - 1, pageGroup + 2).map((number) => (
+                <li
+                  onClick={() => handlePagination(number)}
+                  className={`${
+                    number === currentPage ? "bg-gray-300" : ""
+                  } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
+                  key={number}
+                >
+                  {number}
+                </li>
+              ))}
             {pageGroup < totalPageNumber - 3 && (
               <>
-                <li className="flex items-center justify-center w-8 h-8 font-medium">
+                <li className="flex items-center justify-center w-6 h-6 p-1 font-medium">
                   ...
                 </li>
                 <li
@@ -182,6 +193,20 @@ const PaginateTypeTwo = ({
                 </li>
               </>
             )}
+            {pageGroup >= totalPageNumber - 3 &&
+              pageNumbers
+                .slice(pageGroup - 2, totalPageNumber + 1)
+                .map((number) => (
+                  <li
+                    onClick={() => handlePagination(number)}
+                    className={`${
+                      number === currentPage ? "bg-gray-300" : ""
+                    } flex items-center justify-center w-6 h-6 p-1 rounded-full font-medium hover:bg-gray-300 font-inter cursor-pointer`}
+                    key={number}
+                  >
+                    {number}
+                  </li>
+                ))}
             <li
               title="next"
               onClick={() => handlePagination(currentPage + 1)}
